@@ -1,0 +1,9 @@
+name: Build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    uses: spagoveanu/test1/.github/workflows/test.yml
+    permissions:
+      contents: write
