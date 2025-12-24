@@ -9,4 +9,6 @@ jobs:
       contents: write
   build:
     needs: test
-    run: echo OK, DONE
+    runs-on: ubuntu-latest
+    steps:
+      run: echo OK, DONE
