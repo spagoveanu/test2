@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    uses: spagoveanu/test1/.github/workflows/test.yml
+    uses: spagoveanu/test1/.github/workflows/test.yml@main
     permissions:
       contents: write
   build:
