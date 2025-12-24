@@ -7,3 +7,6 @@ jobs:
     uses: spagoveanu/test1/.github/workflows/test.yml
     permissions:
       contents: write
+  build:
+    needs: test
+    run: echo OK, DONE
