@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          { printf 'ref='; git describe; } >> $GITHUB_ENV
+          { printf 'ref='; git describe --always; } >> $GITHUB_ENV
       - name: find
         run: |
           { pwd; echo ===; find; echo ===; set; } > output || :
