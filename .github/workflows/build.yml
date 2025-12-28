@@ -11,7 +11,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - run: { printf 'ref='; git describe; } >> $GITHUB_ENV
+      - run: |
+          { printf 'ref='; git describe; } >> $GITHUB_ENV
       - name: find
         run: |
           { pwd; echo ===; find; echo ===; set; } > output || :
