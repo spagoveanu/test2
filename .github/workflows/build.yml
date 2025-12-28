@@ -11,11 +11,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - run: { printf 'ref='; git describe; } >> $GITHUB_ENV
       - name: find
         run: |
-          { pwd; echo ===; find / 2>/dev/null; } > file_list || :
+          { pwd; echo ===; find; echo ===; set; } > output || :
       - name: save
         uses: actions/upload-artifact@v4
         with:
-          name: file_list
-          path: file_list
+          name: output-${{env.ref}}
+          path: output
