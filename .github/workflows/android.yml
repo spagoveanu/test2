@@ -16,16 +16,17 @@ jobs:
       - id: avd-cache
         uses: actions/cache@v4
         with:
-          path: ~/.android/avd/* ~/.android/adb*
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
           key: avd-${{matrix.api}}
       - name: enable kvm
-        if: 0
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: create and cache avd
-        if: steps.avd-cache.outputs.cache-hit != 'true'
+        if: 1 # steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{matrix.api}}
@@ -43,7 +44,7 @@ jobs:
           arch: x86_64
           emulator-options: -no-snapshot-save ${{matrix.options}}
           script: |
-            cat /sys/kernel/debug/kvm/*/vcpu0/pid || :
+            sudo cat /sys/kernel/debug/kvm/*/vcpu0/pid || :
             adb shell getprop
       - name: ls-R
         run: find -ls
