@@ -1,0 +1,38 @@
+name: Android Build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      api: [21, 30]
+      options:
+        - -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+    steps:
+      - id: checkout
+        uses: actions/checkout@v4
+      - id: avd-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/avd/* ~/.android/adb*
+          key: avd-${{matrix.api}}
+      - name: create and cache avd
+        if: if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{matrix.api}}
+          force-avd-creation: false
+          disable-animations: false
+          emulator-options: ${{matrix.options}}
+          script: echo Generated AVD snapshot for caching
+      - name: test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{matrix.api}}
+          force-avd-creation: false
+          disable-animations: false
+          emulator-options: -no-snapshot-save ${{matrix.options}}
+          script: |
+            cat /sys/kernel/debug/kvm/*/vcpu0/pid || :
+            adb shell getprop
