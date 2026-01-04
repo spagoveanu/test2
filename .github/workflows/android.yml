@@ -30,6 +30,7 @@ jobs:
           api-level: ${{matrix.api}}
           force-avd-creation: false
           disable-animations: false
+          arch: x86_64
           emulator-options: ${{matrix.options}}
           script: echo Generated AVD snapshot for caching
       - name: test
@@ -38,6 +39,7 @@ jobs:
           api-level: ${{matrix.api}}
           force-avd-creation: false
           disable-animations: false
+          arch: x86_64
           emulator-options: -no-snapshot-save ${{matrix.options}}
           script: |
             cat /sys/kernel/debug/kvm/*/vcpu0/pid || :
