@@ -26,7 +26,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: create and cache avd
-        if: 1 # steps.avd-cache.outputs.cache-hit != 'true'
+        #if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{matrix.api}}
