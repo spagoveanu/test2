@@ -6,9 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      api: [21, 30]
-      options:
-        - -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+      matrix:
+        api: [21, 30]
+        options:
+          - -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
     steps:
       - id: checkout
         uses: actions/checkout@v4
